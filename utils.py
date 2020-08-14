@@ -1,0 +1,32 @@
+import numpy as np
+import pandas as pd
+
+import matplotlib.pyplot as plt
+
+
+def plot_decision_regions(X: np.ndarray, Y: np.ndarray, classifier,
+                          resolution=0.02):
+    from matplotlib.colors import ListedColormap
+    # setup marker generator and color map
+    markers = ('s', 'x', 'o', '^', 'v')
+    colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
+    color_map = ListedColormap(colors[:len(np.unique(Y))])
+
+    # plot the decision surface
+    x1_min, x1_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    x2_min, x2_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+    xx1, xx2 = np.meshgrid(np.arange(x1_min, x1_max, step=resolution),
+                           np.arange(x2_min, x2_max, step=resolution))
+
+    z = classifier.predict(np.array([xx1.ravel(), xx2.ravel()]).T)
+    z = z.reshape(xx1.shape)
+
+    plt.contourf(xx1, xx2, z, alpha=0.3, cmap=color_map)
+    plt.xlim(xx1.min(), xx1.max())
+    plt.ylim(xx2.min(), xx2.max())
+
+    # plot class examples
+    for i, cls in enumerate(np.unique(Y)):
+        plt.scatter(x=X[Y == cls, 0], y=X[Y == cls, 1],
+                    alpha=0.8, c=colors[i], marker=markers[i],
+                    label=cls, edgecolors='black')
