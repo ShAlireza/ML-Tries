@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from O2.perceptron.perceptron import Perceptron
+from O2._01_perceptron.perceptron import Perceptron
 from utils import plot_decision_regions
 
 # path = os.path.join('https://archive.ics.uci.edu', 'ml',
