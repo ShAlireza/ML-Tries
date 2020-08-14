@@ -2,7 +2,7 @@ import numpy as np
 
 
 class AdalineGD:
-    """Perceptron classifier.
+    """ADAptive LInear NEuron classifier.
 
     Parameters
     ----------
@@ -13,6 +13,8 @@ class AdalineGD:
     random_state : int
         Random number generator seed for random weight
         initialization.
+    activation : function
+        Optional activation function provided by user
 
     Attributes
     ----------
