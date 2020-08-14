@@ -6,20 +6,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from O2._02_adaline.adaline import AdalineGD
+from O2.utils import prepare_data
 
-# path = os.path.join('https://archive.ics.uci.edu', 'ml',
-#                     'machine-learning-databases', 'iris', 'iris.data')
-
-path = '../iris.data'
-
-df = pd.read_csv(path, header=None, encoding='utf-8')
-
-print(df.head())
-
-Y = df.iloc[:100, 4].values
-Y = np.where(Y == 'Iris-setosa', -1, 1)
-
-X = df.iloc[:100, [0, 2]].values
+X, Y = prepare_data()
 
 fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(10, 4))
 

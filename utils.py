@@ -30,3 +30,8 @@ def plot_decision_regions(X: np.ndarray, Y: np.ndarray, classifier,
         plt.scatter(x=X[Y == cls, 0], y=X[Y == cls, 1],
                     alpha=0.8, c=colors[i], marker=markers[i],
                     label=cls, edgecolors='black')
+
+
+def standardize(X: np.ndarray):
+    X_std = X.copy()
+    return (X_std - X_std.mean(axis=0)) / X_std.std(axis=0)

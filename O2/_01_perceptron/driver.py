@@ -4,22 +4,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from O2._01_perceptron.perceptron import Perceptron
 from utils import plot_decision_regions
 
-# path = os.path.join('https://archive.ics.uci.edu', 'ml',
-#                     'machine-learning-databases', 'iris', 'iris.data')
+from O2._01_perceptron.perceptron import Perceptron
+from O2.utils import prepare_data
 
-path = '../iris.data'
-
-df = pd.read_csv(path, header=None, encoding='utf-8')
-
-print(df.head())
-
-Y = df.iloc[:100, 4].values
-Y = np.where(Y == 'Iris-setosa', -1, 1)
-
-X = df.iloc[:100, [0, 2]].values
+X, Y = prepare_data()
 
 plt.scatter(X[:50, 0], X[:50, 1],
             color='red', marker='o', label='setosa')
