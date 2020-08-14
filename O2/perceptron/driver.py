@@ -10,7 +10,7 @@ from utils import plot_decision_regions
 # path = os.path.join('https://archive.ics.uci.edu', 'ml',
 #                     'machine-learning-databases', 'iris', 'iris.data')
 
-path = 'iris.data'
+path = '../iris.data'
 
 df = pd.read_csv(path, header=None, encoding='utf-8')
 
