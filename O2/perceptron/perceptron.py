@@ -36,14 +36,20 @@ class Perceptron:
         Parameters
         ------------
         X : {array-like}, shape = [n_examples, n_features]
-            Training vectors, where
+            Training vectors, where n_example is the number of
+            examples and n_features is the number of features.
 
-        :param X:
-        :param Y:
-        :return:
+        Y : array-like, shape = [n_examples]
+            True labels.
+
+        Returns
+        ------------
+        self : Perceptron
+
         """
-        rgen = np.random.RandomState(seed=self.random_state)
-        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=1 + Y.size)
+        random_generator = np.random.RandomState(seed=self.random_state)
+        self.w_ = random_generator.normal(loc=0.0, scale=0.01,
+                                          size=1 + X.shape[1])
 
         self.errors_ = []
 
@@ -60,7 +66,9 @@ class Perceptron:
         return self
 
     def net_input(self, x: np.ndarray):
+        """Calculate net input"""
         return x.dot(self.w_[1:]) + self.w_[0]
 
     def predict(self, x: np.ndarray):
+        """Return class label prediction"""
         return np.where(self.net_input(x) > 0, 1, -1)
