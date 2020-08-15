@@ -2,8 +2,7 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-from O2.utils import prepare_data
-from O2._04_adaline_SGD.adaline_SGD import AdalineSGD
+from O2 import AdalineMBGD, prepare_data
 
 from utils import plot_decision_regions, standardize
 

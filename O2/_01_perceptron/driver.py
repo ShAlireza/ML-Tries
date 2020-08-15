@@ -6,8 +6,7 @@ import matplotlib.pyplot as plt
 
 from utils import plot_decision_regions
 
-from O2._01_perceptron.perceptron import Perceptron
-from O2.utils import prepare_data
+from O2 import Perceptron, prepare_data
 
 X, Y = prepare_data()
 

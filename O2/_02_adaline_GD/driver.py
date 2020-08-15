@@ -5,8 +5,7 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 
-from O2._02_adaline_GD.adaline_GD import AdalineGD
-from O2.utils import prepare_data
+from O2 import AdalineGD, prepare_data
 
 X, Y = prepare_data()
 
