@@ -68,7 +68,7 @@ class AdalineMBGD:
             net_input = self.net_input(X_m)
             output = self.activation(net_input)
             errors = Y_m - output
-            self.w_[1:] += self.eta * X.T.dot(errors)
+            self.w_[1:] += self.eta * X_m.T.dot(errors)
             self.w_[0] += self.eta * errors.sum()
             cost = (errors ** 2).sum() / 2
             self.cost_.append(cost)
