@@ -4,7 +4,7 @@ import numpy as np
 
 
 class AdalineMBGD:
-    """ADAptive LInear NEuron classifier.
+    """ADAptive LInear NEuron classifier (Mini Batch).
 
     Parameters
     ----------

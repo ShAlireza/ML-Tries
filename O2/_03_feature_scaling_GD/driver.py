@@ -6,6 +6,11 @@ from O2.utils import prepare_data
 
 from utils import plot_decision_regions, standardize
 
+"""
+    Using Standardization as a
+    feature scaling method for gradient descent
+"""
+
 X, Y = prepare_data()
 
 X_std = standardize(X)

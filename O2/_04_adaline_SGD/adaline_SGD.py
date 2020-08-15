@@ -4,7 +4,7 @@ import numpy as np
 
 
 class AdalineSGD:
-    """ADAptive LInear NEuron classifier.
+    """ADAptive LInear NEuron classifier (Stochastic Gradient Descent).
 
     Parameters
     ----------
