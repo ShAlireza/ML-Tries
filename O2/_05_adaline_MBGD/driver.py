@@ -10,7 +10,7 @@ X, Y = prepare_data()
 
 X_std = standardize(X)
 
-adaline = AdalineSGD(eta=0.01, epochs=15, random_state=1)
+adaline = AdalineMBGD(eta=0.01, epochs=15, random_state=1)
 adaline.fit(X_std, Y)
 
 plot_decision_regions(X_std, Y, classifier=adaline)
@@ -23,6 +23,6 @@ plt.show()
 
 plt.plot(range(1, len(adaline.cost_) + 1), adaline.cost_, marker='o')
 plt.xlabel('Epochs')
-plt.ylabel('Average Cost')
+plt.ylabel('Cost')
 plt.tight_layout()
 plt.show()

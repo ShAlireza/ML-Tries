@@ -71,4 +71,4 @@ class Perceptron:
 
     def predict(self, x: np.ndarray):
         """Return class label prediction"""
-        return np.where(self.net_input(x) > 0, 1, -1)
+        return np.where(self.net_input(x) >= 0, 1, -1)

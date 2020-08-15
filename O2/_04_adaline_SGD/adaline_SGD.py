@@ -26,7 +26,8 @@ class AdalineSGD:
     w_ : 1d-array
         Weights after fitting.
     cost_ : list
-        Sum of squares (SSE) cost (loss) function value in each epoch.
+        Sum of squares (SSE) cost (loss) function value averaged
+        over all training examples in each epoch.
 
     """
 
@@ -59,13 +60,13 @@ class AdalineSGD:
         self : AdalineSGD
 
         """
-        self._initialize_weights(X.shape[0])
+        self._initialize_weights(X.shape[1])
 
         self.cost_ = []
 
         for _ in range(self.epochs):
             if self.shuffle:
-                X, y = self._shuffle(X, Y)
+                X, Y = self._shuffle(X, Y)
             cost = 0
             for x, y in zip(X, Y):
                 cost += self._update_weights(x, y)
@@ -88,7 +89,7 @@ class AdalineSGD:
     def _shuffle(self, X: np.ndarray,
                  Y: np.ndarray) -> 'Tuple[np.ndarray, np.ndarray]':
         """Shuffle training data"""
-        indexes = self.random_generator.permutation(Y.size)
+        indexes = self.random_generator.permutation(np.arange(0, Y.size))
         return X[indexes], Y[indexes]
 
     def _initialize_weights(self, size: int) -> 'None':
@@ -102,8 +103,8 @@ class AdalineSGD:
         """Apply Adaline learning rule to update weights"""
         output = self.activation(self.net_input(x))
         error = target - output
-        self.w_[1:] = self.eta * x.dot(error)
-        self.w_[0] = self.eta * error
+        self.w_[1:] += self.eta * x.dot(error)
+        self.w_[0] += self.eta * error
         cost = error ** 2 / 2.0
         return cost
 
@@ -117,4 +118,4 @@ class AdalineSGD:
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         """Return class label prediction"""
-        return np.where(self.net_input(X) > 0, 1, -1)
+        return np.where(self.activation(self.net_input(X)) >= 0, 1, -1)

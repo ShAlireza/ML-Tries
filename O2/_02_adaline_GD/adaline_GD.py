@@ -76,4 +76,4 @@ class AdalineGD:
 
     def predict(self, X: np.ndarray):
         """Return class label prediction"""
-        return np.where(self.net_input(X) > 0, 1, -1)
+        return np.where(self.activation(self.net_input(X)) >= 0, 1, -1)
