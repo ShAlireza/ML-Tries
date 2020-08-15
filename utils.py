@@ -5,8 +5,10 @@ import matplotlib.pyplot as plt
 
 
 def plot_decision_regions(X: np.ndarray, Y: np.ndarray, classifier,
+                          test_idx=None,
                           resolution=0.02):
     from matplotlib.colors import ListedColormap
+
     # setup marker generator and color map
     markers = ('s', 'x', 'o', '^', 'v')
     colors = ('red', 'blue', 'lightgreen', 'gray', 'cyan')
@@ -30,6 +32,16 @@ def plot_decision_regions(X: np.ndarray, Y: np.ndarray, classifier,
         plt.scatter(x=X[Y == cls, 0], y=X[Y == cls, 1],
                     alpha=0.8, c=colors[i], marker=markers[i],
                     label=cls, edgecolors='black')
+
+    # highlight test examples
+    if test_idx:
+        # plot all examples
+        X_test, Y_test = X[test_idx, :], Y[test_idx]
+
+        plt.scatter(X_test[:, 0], X_test[:, 1],
+                    c='', edgecolor='black', alpha=1.0,
+                    linewidth=1, marker='o',
+                    s=100, label='test set')
 
 
 def standardize(X: np.ndarray):
