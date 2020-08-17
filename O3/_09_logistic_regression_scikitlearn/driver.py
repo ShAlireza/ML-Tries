@@ -24,6 +24,12 @@ sc.fit(X_train)
 X_train = sc.transform(X_train)
 X_test = sc.transform(X_test)
 
+# C stands for regularization constant, smaller values specify stronger
+# regularization.
+
+# solver: Chosen optimization algorithm from varieties of algorithms
+# provided by sklearn: newton-cg, lbfgs, liblinear, sag, saga
+
 logistic_regression = LogisticRegression(C=100.0, random_state=1,
                                          solver='lbfgs', multi_class='ovr')
 
@@ -43,3 +49,12 @@ plt.ylabel('petal width [standardized]')
 plt.legend(loc='upper left')
 plt.tight_layout()
 plt.show()
+
+print(logistic_regression.predict_proba(X_test[:3, :]))
+
+# print(logistic_regression.predict_proba(X_test[:3, :]).argmax(axis=1))
+
+print(logistic_regression.predict(X_test[:3, :]))
+
+# reshape(1, -1) to make one dimensional array to a two dimensional array
+print(logistic_regression.predict(X_test[0, :].reshape(1, -1)))
