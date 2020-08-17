@@ -2,6 +2,8 @@ from typing import Tuple, Union
 
 import numpy as np
 
+from utils import identity
+
 
 class AdalineSGD:
     """ADAptive LInear NEuron classifier (Stochastic Gradient Descent).
@@ -37,7 +39,7 @@ class AdalineSGD:
         self.epochs = epochs
         self.random_state = random_state
         self.shuffle = shuffle
-        self._activation = activation
+        self._activation = activation if activation else identity
         self.w_ = None
         self.w_initialized = False
         self.random_generator = np.random.RandomState(seed=self.random_state)
@@ -110,7 +112,7 @@ class AdalineSGD:
 
     def activation(self, X: np.ndarray) -> 'np.ndarray':
         """Apply linear activation function"""
-        return self._activation(X) if self._activation else X
+        return self._activation(X)
 
     def net_input(self, X: np.ndarray) -> 'np.ndarray':
         """Calculate net input"""

@@ -47,3 +47,19 @@ def plot_decision_regions(X: np.ndarray, Y: np.ndarray, classifier,
 def standardize(X: np.ndarray):
     X_std = X.copy()
     return (X_std - X_std.mean(axis=0)) / X_std.std(axis=0)
+
+
+def identity(x):
+    return x
+
+
+def sigmoid(x, clip=None):
+    if clip:
+        assert (type(clip) == list or type(clip) == tuple,
+                "Boundary should be a list of tuple")
+        assert len(clip) == 2, "Boundary list size must be 2"
+        assert clip[0] < clip[1], "Invalid interval"
+
+        return 1 / (1 + np.exp(-np.clip(x, clip[0], clip[1])))
+
+    return 1 / (1 + np.exp(-x))

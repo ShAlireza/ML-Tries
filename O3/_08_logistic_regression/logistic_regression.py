@@ -1,10 +1,8 @@
 import numpy as np
 
-from utils import identity
 
-
-class AdalineGD:
-    """ADAptive LInear NEuron classifier.
+class LogisticRegressionGD:
+    """Logistic Regression classifier.
 
     Parameters
     ----------
@@ -15,23 +13,20 @@ class AdalineGD:
     random_state : int
         Random number generator seed for random weight
         initialization.
-    activation : function
-        Optional activation function provided by user
 
     Attributes
     ----------
     w_ : 1d-array
         Weights after fitting.
     cost_ : list
-        Sum of squares (SSE) cost (loss) function value in each epoch.
+        Logistic cost function value in each epoch.
 
     """
 
-    def __init__(self, eta=0.01, epochs=50, random_state=1, activation=None):
+    def __init__(self, eta=0.01, epochs=50, random_state=1):
         self.eta = eta
         self.epochs = epochs
         self.random_state = random_state
-        self._activation = activation if activation else identity
         self.w_ = None
         self.cost_ = None
 
@@ -49,7 +44,7 @@ class AdalineGD:
 
         Returns
         -------
-        self : AdalineGD
+        self : LogisticRegressionGD
 
         """
         random_generator = np.random.RandomState(seed=self.random_state)
@@ -61,16 +56,18 @@ class AdalineGD:
         for _ in range(self.epochs):
             net_input = self.net_input(X)
             output = self.activation(net_input)
-            errors = Y - output
+            errors = (Y - output)
             self.w_[1:] += self.eta * X.T.dot(errors)
             self.w_[0] += self.eta * errors.sum()
-            cost = (errors ** 2).sum() / 2
+            cost = (-Y.dot(np.log(output)) -
+                    (1 - Y).dot(np.log(1 - output)))
             self.cost_.append(cost)
+
         return self
 
     def activation(self, X: np.ndarray):
-        """Apply linear activation function"""
-        return self._activation(X)
+        """Apply logistic sigmoid activation function"""
+        return 1 / (1 + np.exp(-np.clip(X, a_min=-250, a_max=250)))
 
     def net_input(self, X: np.ndarray):
         """Calculate net input"""
@@ -78,4 +75,7 @@ class AdalineGD:
 
     def predict(self, X: np.ndarray):
         """Return class label prediction"""
-        return np.where(self.activation(self.net_input(X)) >= 0, 1, -1)
+        return np.where(self.activation(self.net_input(X)) >= 0.5, 1, 0)
+
+        # equivalent to :
+        #   return np.where(self.net_input(X) >= 0, 1, 0)

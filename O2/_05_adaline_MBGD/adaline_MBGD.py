@@ -2,6 +2,8 @@ from typing import Tuple
 
 import numpy as np
 
+from utils import identity
+
 
 class AdalineMBGD:
     """ADAptive LInear NEuron classifier (Mini Batch).
@@ -35,7 +37,7 @@ class AdalineMBGD:
         self.epochs = epochs
         self.random_state = random_state
         self.batch_size = batch_size
-        self._activation = activation
+        self._activation = activation if activation else identity
         self.w_ = None
         self.random_generator = np.random.RandomState(seed=random_state)
         self.cost_ = None
@@ -75,25 +77,25 @@ class AdalineMBGD:
         return self
 
     def _mini_batch(self, X: np.ndarray,
-                    Y: np.ndarray) -> 'Tuple[np.ndarray, np.ndarray]':
+                    Y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """Get a random mini batch from complete data"""
         random_indexes = self.random_generator.choice(np.arange(0, Y.size),
                                                       size=self.batch_size)
         return X[random_indexes], Y[random_indexes]
 
-    def _initialize_weights(self, size: int) -> 'None':
+    def _initialize_weights(self, size: int) -> None:
         """Initialize weights to small random numbers"""
         self.w_ = self.random_generator.normal(loc=0.0, scale=0.01,
                                                size=1 + size)
 
-    def activation(self, X: np.ndarray) -> 'np.ndarray':
+    def activation(self, X: np.ndarray) -> np.ndarray:
         """Apply linear activation function"""
-        return self._activation(X) if self._activation else X
+        return self._activation(X)
 
-    def net_input(self, X: np.ndarray) -> 'np.ndarray':
+    def net_input(self, X: np.ndarray) -> np.ndarray:
         """Calculate net input"""
         return X.dot(self.w_[1:]) + self.w_[0]
 
-    def predict(self, X: np.ndarray) -> 'np.ndarray':
+    def predict(self, X: np.ndarray) -> np.ndarray:
         """Return class label prediction"""
         return np.where(self.net_input(X) > 0, 1, -1)

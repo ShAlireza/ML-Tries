@@ -2,7 +2,7 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-from O3 import sigmoid
+from utils import sigmoid
 
 
 def cost_1(z):
