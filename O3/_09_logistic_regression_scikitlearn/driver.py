@@ -10,19 +10,8 @@ from utils import plot_decision_regions
 
 from O3 import prepare_data
 
-X, Y = prepare_data()
-
-X_train, X_test, Y_train, Y_test = train_test_split(
-    X, Y, test_size=0.3, random_state=1, stratify=Y
-)
-
-# Standardize data
-
-sc = StandardScaler()
-sc.fit(X_train)
-
-X_train = sc.transform(X_train)
-X_test = sc.transform(X_test)
+X_train, X_test, Y_train, Y_test = prepare_data(standardize=True,
+                                                split=True)
 
 # C stands for regularization constant, smaller values specify stronger
 # regularization.
