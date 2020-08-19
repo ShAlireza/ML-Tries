@@ -41,7 +41,7 @@ def plot_decision_regions(X: np.ndarray, Y: np.ndarray, classifier,
         X_test, Y_test = X[test_idx, :], Y[test_idx]
 
         plt.scatter(X_test[:, 0], X_test[:, 1],
-                    c='', edgecolor='black', alpha=1.0,
+                    c='none', edgecolor='black', alpha=1.0,
                     linewidth=1, marker='o',
                     s=100, label='test set')
 
