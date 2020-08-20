@@ -2,13 +2,10 @@ from io import StringIO
 
 import pandas as pd
 
-csv_data = """A,B,C,D
-1.0,2.0,3.0,4.0
-5.0,6.0,,8.0
-10.0,11.0,12.0,
-,,,"""
+from O4 import csv_file
 
-df = pd.read_csv(StringIO(csv_data))
+csv = csv_file()
+df = pd.read_csv(StringIO(csv))
 
 print(df)
 
