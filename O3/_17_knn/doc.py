@@ -15,4 +15,16 @@
     we want to classify. The class label of the data point is then determined
     by a majority vote among its k nearest neighbors.
 
+    The main advantage of such a memory-based approach is that the classifier
+    immediately adapts as we collect new training data. However, the downside
+    is that the computational complexity for classifying new examples grows
+    linearly with the number of examples in the training dataset in the
+    worst-case scenario—unless the dataset has very few dimensions (features)
+    and the algorithm has been implemented using efficient data structures such
+    as k-d trees (An Algorithm for Finding Best Matches in Logarithmic Expected
+    Time, J. H. Friedman, J. L. Bentley, and R.A. Finkel, ACM transactions on
+    mathematical software (TOMS), 3(3): 209–226, 1977). Furthermore, we can't
+    discard training examples since no training step is involved. Thus, storage
+    space can become a challenge if we are working with large datasets.
+
 """
