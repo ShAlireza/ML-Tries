@@ -5,11 +5,7 @@ from sklearn.model_selection import train_test_split
 
 from O4 import prepare_data
 
-df_wine = prepare_data(head=5)
-
-print("Class labels", np.unique(df_wine['Class label']))
-
-X, y = df_wine.iloc[:, 1:].values, df_wine.iloc[:, 0].values
+X, y = prepare_data(head=5, print_classes=True)
 
 # Providing the class label array y as an argument to stratify ensures that
 # both training and test datasets have the same class proportions as the
@@ -36,5 +32,3 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3,
 # in section one of this  article Model evaluation, model selection, and
 # algorithm selection in machine learning, which is freely available
 # at https://arxiv.org/pdf/1811.12808.pdf .
-
-
