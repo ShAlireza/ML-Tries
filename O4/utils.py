@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 
 
@@ -20,4 +22,29 @@ def categorical_dataframe():
         ['blue', 'XL', 15.3, 'class2']])
 
     df.columns = ['color', 'size', 'price', 'label']
+    return df
+
+
+def prepare_data(path='../wine.data', download=False, head=0):
+    if download:
+        path = os.path.join('https://archive.ics.uci.edu', 'ml',
+                            'machine-learning-databases', 'wine',
+                            'wine.data')
+
+    df = pd.read_csv(path, header=None)
+
+    df.columns = ['Class label', 'Alcohol',
+                  'Malic acid', 'Ash',
+                  'Alcalinity of ash', 'Magnesium',
+                  'Total phenols', 'Flavanoids',
+                  'Nonflavanoid phenols',
+                  'Proanthocyanins',
+                  'Color intensity', 'Hue',
+                  'OD280/OD315 of diluted wines',
+                  'Proline']
+
+    if head:
+        assert type(head) == int, "Head must be an integer"
+        print(df.head(head))
+
     return df

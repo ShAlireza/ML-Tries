@@ -13,7 +13,8 @@ def prepare_data(path='../iris.data', download=False, head=0):
     df = pd.read_csv(path, header=None, encoding='utf-8')
 
     if head:
-        print(df.head())
+        assert type(head) == int, "Head must be an integer"
+        print(df.head(head))
 
     Y = df.iloc[:100, 4].values
     Y = np.where(Y == 'Iris-setosa', -1, 1)
