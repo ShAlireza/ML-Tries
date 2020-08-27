@@ -79,7 +79,8 @@ class SBS(object):
         dim = X_train.shape[1]
         self.indices_ = tuple(range(dim))
         self.subsets_ = [self.indices_]
-        score = self._calc_score(X_train, y_train, X_test, y_test)
+        score = self._calc_score(X_train, y_train, X_test, y_test,
+                                 self.indices_)
         self.scores_ = [score]
 
         while dim > self.k_features:
@@ -92,7 +93,7 @@ class SBS(object):
                 scores.append(score)
                 subsets.append(p)
 
-            best = np.argmax(scores)
+            best = int(np.argmax(scores))
             self.indices_ = subsets[best]
             self.subsets_.append(self.indices_)
             dim -= 1
@@ -104,7 +105,7 @@ class SBS(object):
         return self
 
     def transform(self, X):
-        return X[: self.indices_]
+        return X[:, self.indices_]
 
     def _calc_score(self, X_train, y_train, X_test, y_test, indices):
         self.estimator.fit(X_train[:, indices], y_train)
