@@ -28,7 +28,8 @@ def categorical_dataframe():
 
 
 def prepare_data(path='../wine.data', download=False, head=0,
-                 print_classes=False, standardize=False, split=False):
+                 print_classes=False, standardize=False, split=False,
+                 dataframe=False):
     from sklearn.preprocessing import StandardScaler
     from sklearn.model_selection import train_test_split
 
@@ -72,6 +73,10 @@ def prepare_data(path='../wine.data', download=False, head=0,
         X_test = sc.transform(X_test) if split else X_test
 
     if split:
+        if dataframe:
+            return X_train, X_test, y_train, y_test, df
         return X_train, X_test, y_train, y_test
 
+    if dataframe:
+        return X_train, y_train, df
     return X_train, y_train
