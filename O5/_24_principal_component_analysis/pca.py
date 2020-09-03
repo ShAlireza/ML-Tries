@@ -46,6 +46,8 @@ X_train, X_test, y_train, y_test, df_wine = prepare_data_wine(standardize=True,
 
 cov_mat = np.cov(X_train.T)
 
+# 3. Obtaining the eigenvalues and eigenvectors of the covariance matrix.
+
 eigen_values, eigen_vectors = np.linalg.eig(cov_mat)
 print(f"EigenValues \n{eigen_values}")
 
@@ -89,3 +91,67 @@ plt.xlabel('Principal component index')
 plt.legend(loc='best')
 plt.tight_layout()
 plt.show()
+
+# The resulting plot indicates that the first principal component alone
+# accounts for approximately 40 percent of the variance.
+# Also, we can see that the first two principal components combined explain
+# almost 60 percent of the variance in the dataset
+# we should remind ourselves that PCA is an unsupervised method, which means
+# that information about the class labels is ignored. Whereas a random forest
+# uses the class membership information to compute the node impurities,
+# variance measures the spread of values along a feature axis.
+
+# 4. Sorting the eigenvalues by decreasing order to rank the eigenvectors
+eigen_pairs = [(np.abs(eigen_values[i]), eigen_vectors[:, i])
+               for i in range(len(eigen_values))]
+
+eigen_pairs = sorted(eigen_pairs, key=lambda x: x[0], reverse=True)
+
+# 5. Select k(here k=2) eigenvectors, which correspond to the k largest
+# eigenvalues, where k is the dimensionality of the new feature subspace
+# (k <= d)
+
+# Now, we collect the two eigenvectors that correspond to the two largest
+# eigenvalues, to capture about 60 percent of the variance in this dataset.
+# Note that two eigenvectors have been chosen for the purpose of illustration,
+# since we are going to plot the data via a two-dimensional scatter plot later
+# in this subsection. In practice, the number of principal components has to be
+# determined by a tradeoff between computational efficiency and the performance
+# of the classifier.
+first_eigenvalue_vector = eigen_pairs[0][1]
+second_eigenvalue_vector = eigen_pairs[1][1]
+
+# 6. Construct a projection matrix, W, from the "top" k eigenvectors
+
+w = np.hstack((first_eigenvalue_vector[:, np.newaxis],
+               second_eigenvalue_vector[:, np.newaxis]))
+print(w)
+
+# 7. Transform the d-dimensional input dataset, X, using the projection matrix,
+# W, to obtain the new k-dimensional feature subspace.
+#       Transformation: x' = xW for x ∈ X
+print(X_train[0].dot(w))
+
+# Or full transformation: X' = XW
+
+X_train_pcs = X_train.dot(w)
+colors = ['red', 'blue', 'green']
+markers = ['s', 'x', 'o']
+for l, c, m in zip(np.unique(y_train), colors, markers):
+    plt.scatter(X_train_pcs[y_train == l, 0],
+                X_train_pcs[y_train == l, 1],
+                c=c, label=l, marker=m)
+
+plt.xlabel('PC 1')
+plt.ylabel('PC 2')
+plt.legend(loc='lower left')
+plt.tight_layout()
+plt.show()
+# As we can see in the resulting plot, the data is more spread along the x-axis
+# —the first principal component—than the second principal component (y-axis),
+# which is consistent with the explained variance ratio plot that we created in
+# the previous subsection. However, we can tell that a linear classifier will
+# likely be able to separate the classes well.
+# Although we encoded the class label information for the purpose of
+# illustration in the preceding scatter plot, we have to keep in mind that PCA
+# is an unsupervised technique that doesn't use any class label information.

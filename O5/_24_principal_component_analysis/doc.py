@@ -26,7 +26,7 @@
         xW = z
 
     resulting the output vector:
-        z = [z(1) , z(2) , ... , z(k)], z ∈ R(, k)
+        z = [z(1) , z(2) , ... , z(k)], z R(, k)
 
 
     As a result of transforming the original d-dimensional data onto this new
