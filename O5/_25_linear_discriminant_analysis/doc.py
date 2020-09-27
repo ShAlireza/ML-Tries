@@ -38,7 +38,7 @@ The inner workings of linear discriminant analysis
     5. Sort the eigenvalues by decreasing order to rank the corresponding
        eigenvectors.
     6. Choose the k eigenvectors that correspond to the k largest eigenvalues
-       to construct a dd × kk -dimensional transformation matrix, W; the
+       to construct a d × k -dimensional transformation matrix, W; the
        eigenvectors are the columns of this matrix.
     7. Project the examples onto the new feature subspace using the
        transformation matrix, W.

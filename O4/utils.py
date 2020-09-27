@@ -64,7 +64,7 @@ def prepare_data(path='../wine.data', download=False, head=0,
 
     if split:
         X_train, X_test, y_train, y_test = train_test_split(
-            X_train, y_train, train_size=0.3, random_state=random_state
+            X_train, y_train, test_size=0.3, random_state=random_state
             , stratify=y_train,
         )
     if standardize:

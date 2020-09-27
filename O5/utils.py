@@ -7,7 +7,7 @@ import pandas as pd
 
 def prepare_data_wine(path='../wine.data', download=False, head=0,
                       print_classes=False, standardize=False, split=False,
-                      dataframe=False, random_state=1, train_size=0.3):
+                      dataframe=False, random_state=1, test_size=0.3):
     from sklearn.preprocessing import StandardScaler
     from sklearn.model_selection import train_test_split
 
@@ -42,7 +42,7 @@ def prepare_data_wine(path='../wine.data', download=False, head=0,
 
     if split:
         X_train, X_test, y_train, y_test = train_test_split(
-            X_train, y_train, train_size=train_size, random_state=random_state
+            X_train, y_train, test_size=test_size, random_state=random_state
             , stratify=y_train,
         )
     if standardize:
